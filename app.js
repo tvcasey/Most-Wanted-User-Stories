@@ -21,8 +21,15 @@ function app(people){
   }
   
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
-}
+  
+    if(searchResults.length === 1) {
+       mainMenu(searchResults[0], people);
+    }
+    else{
+      prompt("multiple results");
+      //read out all results
+    }
+}     
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -38,6 +45,8 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
+      caseInfo(person);
+      return mainMenu(person, people);
     // TODO: get person's info
     break;
     case "family":
@@ -54,6 +63,18 @@ function mainMenu(person, people){
     default:
     return mainMenu(person, people); // ask again
   }
+}
+
+function caseInfo(personInfo){
+    alert("info:"
+    + "\n id: " + personInfo.id
+    + "\n firstName: " + personInfo.firstName
+    + "\n lastName: " + personInfo.lastName
+    + "\n gender: " + personInfo.gender
+    + "\n height: " + personInfo.height
+    + "\n weight: " + personInfo.weight
+    + "\n eyeColor: " + personInfo.eyeColor
+    + "\n currentSpouse: " + personInfo.currentSpouse);
 }
 
 function searchByName(people){
