@@ -1,3 +1,36 @@
+// */
+// // prompt("Do you know their 'id', 'info', 'gender', 'height', 'weight', 'eyeColor', 'currentSpouse','family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+// // if('id'){
+// //   searchResults = searchByid(people);
+// // } else if('info'){
+// //  searchResults = searchByinfo(people);
+// // } else if('gender'){
+// //   searchResults = searchBygender(people);
+// // } else if('height'){
+// //   searchResults = searchByheight(people);
+// // } else if('weight'){
+// //   searchResults = searchByweight(people);
+// // } else if('eyeColor'){
+// //   searchResults = searchByeyeColor(people);
+// // } else('currentSpouse'){
+// //   searchResults = searchBycurrentSpouse(people);*/
+
+
+
+//   if('id'){
+//     prompt("What is the their 'id'?");
+//   } else if('gender'){
+//     prompt("What is their 'gender'?");
+//   } else if('height'){
+//     prompt("What is their 'height'?");
+//   } else if('weight'){
+//     prompt("What is their 'weight'?");
+//   } else if('eyeColor'){
+//     prompt("What is their 'eyeColor'?");
+//   } else if('currentSpouse'){
+//     prompt("Who is their current Spouse?");
+//   }
+// }
 "use strict"
 "use strict"
 /*
@@ -13,16 +46,12 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-     let searchInfo = prompt("Would you like to search by 'id'? Enter 'yes' or 'no'");
-     switch (searchInfo) {
-       case 'yes': 
-         searchResults = searchById(people);
-         break;
-       default:
-        searchResults = searchByinfo(people);
-        // TODO: search by traits
-         break;
-     }
+     prompt("Would you like to search by info? Enter 'yes' or 'no'");
+     case 'yes':
+       searchResults = searchByinfo(people);
+       break;
+      case 'no':
+      // TODO: search by traits
       break;
       default:
     app(people); // restart app
@@ -31,13 +60,13 @@ function app(people){
   
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   
-  if(searchResults.length === 1) {
-      mainMenu(searchResults[0], people);
-  }
-  else{
-    prompt("multiple results");
-    //read out all results
-  }
+    if(searchResults.length === 1) {
+       mainMenu(searchResults[0], people);
+    }
+    else{
+      prompt("multiple results");
+      //read out all results
+    }
 }     
 
 // Menu function to call once you find who you are looking for
@@ -77,41 +106,27 @@ function mainMenu(person, people){
 function searchByinfo(people){
 let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor', 'currentSpouse','family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 // to search by info
-  switch(searchInfo){
-    case "id":
-      caseInfo(personInfo.id);
-      return mainMenu(person, people);
-    // TODO: get person's info
-    break;
-    case "gender":
-    // TODO: get person's family
-    break;
-    case "height":
-    // TODO: get person's descendants
-    break;
-    case "weight":
-    app(people); // restart
-    break;
-    case "quit":
-    return; // stop execution
-    default:
-    return mainMenu(person, people); // ask again
-  }
-}
-function searchById(people){
-  let id = promptFor("What is the person's 'id'?", chars);
-  
 
-  let foundPerson = people.filter(function(person){
-    if(person.id === parseInt(id)){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  // TODO: find the person using the name they entered
-  return foundPerson;
+
+switch(searchInfo){
+  case "id":
+    caseInfo(personInfo.id);
+    return mainMenu(person, people);
+  // TODO: get person's info
+  break;
+  case "gender":
+  // TODO: get person's family
+  break;
+  case "height":
+  // TODO: get person's descendants
+  break;
+  case "weight":
+  app(people); // restart
+  break;
+  case "quit":
+  return; // stop execution
+  default:
+  return mainMenu(person, people); // ask again
 }
 
 
@@ -184,20 +199,20 @@ function chars(input){
 }
 
 
-// /*  Most Wanted User Stories 100 points
-// Goal: You have been contracted to build a prototype for a person search for a
-// top-secret government project. You have been given access to an array of
-// objects representing individuals. The prototype should just use window.prompt
-// and window.alert for the User Interface (UI). All results should be printed
-// through the window.alert and window.prompt. Although this isn’t typical in
-// production, you may use only two files for this project, an HTML file and a
-// JS file for the application.
+/*  Most Wanted User Stories 100 points
+Goal: You have been contracted to build a prototype for a person search for a
+top-secret government project. You have been given access to an array of
+objects representing individuals. The prototype should just use window.prompt
+and window.alert for the User Interface (UI). All results should be printed
+through the window.alert and window.prompt. Although this isn’t typical in
+production, you may use only two files for this project, an HTML file and a
+JS file for the application.
 
 
-// Technologies: JavaScript
-// User stories:
+Technologies: JavaScript
+User stories:
 
-// (5 points): As a developer, I want to make consistent commits with good, descriptive messages.*/
+(5 points): As a developer, I want to make consistent commits with good, descriptive messages.*/
 
 
 
@@ -213,9 +228,9 @@ function chars(input){
 
 
 
-// /*
-// (5 points): As a developer, I want to run validation on any user input,
-// 			ensuring that a user is re- prompted when they provide invalid input.*/
+/*
+(5 points): As a developer, I want to run validation on any user input,
+			ensuring that a user is re- prompted when they provide invalid input.*/
 
 
 
@@ -236,10 +251,10 @@ function chars(input){
 
 
 
-// /*
-// (10 points): As a user, I want to be able to search for someone based on a single
-// 			 criterion. (You should be able to find and return a list of people
-// 			 who match the search)*/
+/*
+(10 points): As a user, I want to be able to search for someone based on a single
+			 criterion. (You should be able to find and return a list of people
+			 who match the search)*/
 
 
 
@@ -260,10 +275,10 @@ function chars(input){
 
 
 
-// /*
-// (20 points): As a user, I want to be able to search for someone based on
-// 			 2-5 criteria. (I.e if you search for Gender: male and Eye
-// 			 Color: blue, you should get back a list of people who match the search)*/
+/*
+(20 points): As a user, I want to be able to search for someone based on
+			 2-5 criteria. (I.e if you search for Gender: male and Eye
+			 Color: blue, you should get back a list of people who match the search)*/
 
 
 
@@ -285,10 +300,10 @@ function chars(input){
 
 
 
-// /*
-// (15 points): As a user, I want to be able to look up someone’s information
-// 			 after I find them with the program (display values for the
-// 			 various traits of the found person).*/
+/*
+(15 points): As a user, I want to be able to look up someone’s information
+			 after I find them with the program (display values for the
+			 various traits of the found person).*/
 
 
 
@@ -309,10 +324,10 @@ function chars(input){
 
 
 
-// /*
-// (25 points): As a user, I want to be able look up someone’s descendants after I
-// 			 find them with the program (display the names of the descendants),
-// 			 using recursion.*/
+/*
+(25 points): As a user, I want to be able look up someone’s descendants after I
+			 find them with the program (display the names of the descendants),
+			 using recursion.*/
 
 
 
@@ -333,9 +348,9 @@ function chars(input){
 
 
 
-// /*
-// (20 points): As a user, I want to be able look up someone’s immediate family
-// 			 members after I find them with the program (display the names of
-// 			 the family members and their relation to the found person. Parents,
-//        spouse, and siblings)*/
-// }
+/*
+(20 points): As a user, I want to be able look up someone’s immediate family
+			 members after I find them with the program (display the names of
+			 the family members and their relation to the found person. Parents,
+       spouse, and siblings).
+       */
