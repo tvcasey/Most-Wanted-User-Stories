@@ -5,15 +5,32 @@ Build all of your functions for displaying and gathering information below (GUI)
 */
 
 // app is the function called to start the entire application
+function promptFor(question, valid){
+
+  do{
+    var response = prompt(question).trim();
+  } while(!response || !valid(response));
+  return response;
+  }
+
+  function yesNo(input){
+    return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+  
+
+  }
+
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
+
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
       break;
     case 'no':
      let searchInfo = prompt("Would you like to search by 'id'? Enter 'yes' or 'no'");
+  }
+  
      switch (searchInfo) {
        case 'yes': 
          searchResults = searchById(people);
@@ -22,23 +39,28 @@ function app(people){
         searchResults = searchByinfo(people);
         // TODO: search by traits
          break;
-     }
-      break;
-      default:
-    app(people); // restart app
-      break;
+     
+  //    break;
+  //    default:
+  //  app(people); // restart app
+  //    break;
   }
   
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   
-  if(searchResults.length === 1) {
-      mainMenu(searchResults[0], people);
+   if(searchResults.length === 1) {
+    mainMenu(searchResults[0], people);
   }
-  else{
-    prompt("multiple results");
+     else{
+      prompt("multiple results");
     //read out all results
-  }
-}     
+   }
+
+
+}
+
+
+       
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -55,7 +77,7 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
       caseInfo(person);
-      return mainMenu(person, people);
+      mainMenu(person, people);
     // TODO: get person's info
     break;
     case "family":
@@ -68,54 +90,170 @@ function mainMenu(person, people){
     app(people); // restart
     break;
     case "quit":
-    return; // stop execution
+   // return; // stop execution
     default:
-    return mainMenu(person, people); // ask again
+    mainMenu(person, people); // ask again
   }
 }
+/*let personInfo = {
+  id: "personInfo.id",
+  firstName: "personInfo.firstName",
+  lastName: "personInfo.lastName",
+  gender: "personInfo.gender",
+  height: "personInfo.height",
+  weight: "personInfo.weight",
+  eyeColor: "personInfo.eyeColor",
+  currentSpouse: "personInfo.currentSpouse"
+};*/
+
 
 function searchByinfo(people){
-let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor', 'currentSpouse','family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+
+  let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor'? Type the option you want or 'restart' or 'quit'");
+  let foundPeople;
 // to search by info
   switch(searchInfo){
     case "id":
-      caseInfo(personInfo.id);
-      return mainMenu(person, people);
+      foundPeople = searchById(people);
+      caseInfo(person.id);
+    //  return mainMenu(person, people);
     // TODO: get person's info
     break;
     case "gender":
+      searchByGender("what comes back from the function goes to caseInfo")
+      caseInfo(person.gender);
+     // return mainMenu(person, people);
     // TODO: get person's family
     break;
     case "height":
+      caseInfo(person.height);
+     // return mainMenu(person, people);
     // TODO: get person's descendants
     break;
     case "weight":
-    app(people); // restart
+      caseInfo(person.weight);
+    //  return mainMenu(person, people);
+    break;
+    case "eyeColor":
+      caseInfo(person.eyeColor)
+     // return mainMenu(person, people);
+    break;
+    case "restart":
+      app(people); // restart
     break;
     case "quit":
-    return; // stop execution
+    //return; // stop execution
     default:
-    return mainMenu(person, people); // ask again
+    break;
+    //return mainMenu(person, people); // ask again
   }
 }
+
 function searchById(people){
-  let id = promptFor("What is the person's 'id'?", chars);
+
+
+
+let id = promptFor("What is the person's 'id'?", chars);
   
 
-  let foundPerson = people.filter(function(person){
+let foundPerson = people.filter(function(person){
     if(person.id === parseInt(id)){
       return true;
     }
     else{
       return false;
     }
-  })
-  // TODO: find the person using the name they entered
-  return foundPerson;
-}
+  });
 
+  return foundPerson;
+  
+}
+  // TODO: find the person using the name they entered
+  // return foundPerson;  Had a return issue during editing.  Do we use return?
+
+function searchByGender(people){
+
+  let gender = promptFor("Please enter the person's gender.", chars);
+
+
+    let foundPeople = people.filter(function(person){
+    if(person.gender === gender){
+
+      return true;
+      }
+      else{
+
+      }
+      return false;
+    });
+  
+    return foundPeople;
+  }
+  
+  
+function searchByHeight(people){
+  
+  let height = promptFor("Please enter the person's height.", chars);
+  
+  foundPerson += people.filter(function(person){
+        
+    if(person.height === height){
+  
+          return true;
+        }
+  
+        
+        else{
+
+        }
+  
+          return false;
+      });
+  
+  
+      
+
+function searchByWeight(people){
+
+  let weight = promptFor("Please enter the person's weight in pounds.", chars);
+      
+  foundPerson += people.filter(function(person){
+    if(person.weight === weight){
+    
+    return true;
+    }
+    
+    else{
+    
+    return false;
+    }
+    foundPerson = false;
+  });
+
+    
+      
+      
+function searchByEyeColor(people){
+
+  let eyeColor = promptFor("Please enter the person's height in (feet, inches)?", chars);
+      
+  let foundPerson = people.filter(function(person){
+    if(person.eyeColor === eyeColor){
+      
+    return true;
+    }
+      
+    else{
+      
+    return false;
+    }
+      
+      
+
+    
 
 function caseInfo(personInfo){
+
     alert("info:"
     + "\n id: " + personInfo.id
     + "\n firstName: " + personInfo.firstName
@@ -127,28 +265,35 @@ function caseInfo(personInfo){
     + "\n currentSpouse: " + personInfo.currentSpouse);
 }
 
+
 function searchByName(people){
+
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
 
   let foundPerson = people.filter(function(person){
+
+
     if(person.firstName === firstName && person.lastName === lastName){
       return true;
     }
     else{
       return false;
     }
-  })
+  
+  }
   // TODO: find the person using the name they entered
   return foundPerson;
-}
+
 
 // alerts a list of people
 function displayPeople(people){
+
   alert(people.map(function(person){
+  
     return person.firstName + " " + person.lastName;
-  }).join("\n"));
-}
+  
+    //.join("\n"));
 
 function displayPerson(person){
   // print all of the information about a person:
@@ -166,22 +311,24 @@ function displayPerson(person){
 }
 
 // function that prompts and validates user input
-function promptFor(question, valid){
-  do{
-    var response = prompt(question).trim();
-  } while(!response || !valid(response));
-  return response;
-}
+//function promptFor(question, valid){
+//
+//  do{
+//    var response = prompt(question).trim();
+//  } while(!response || !valid(response));
+//  return response;
+//  }
 
 // helper function to pass into promptFor to validate yes/no answers
-function yesNo(input){
-  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
-}
+//function yesNo(input){
+//  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+
 
 // helper function to pass in as default promptFor validation
 function chars(input){
+
   return true; // default validation only
-}
+
 
 
 // /*  Most Wanted User Stories 100 points
@@ -338,4 +485,3 @@ function chars(input){
 // 			 members after I find them with the program (display the names of
 // 			 the family members and their relation to the found person. Parents,
 //        spouse, and siblings)*/
-// }
