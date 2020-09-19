@@ -48,23 +48,24 @@ function app(people){
   //  app(people); // restart app
   //    break;
   }
-  
+}  
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  let foundPeople;
+  let searchResults;
    if(searchResults === 1) {
-    mainMenu(searchResults[0], people);
+    //mainMenu(searchResults[0], people);
   }
      else{
-      alert("multiple results");
-      let foundPeople = searchByGender(people);
-      const testTest = Object.entries(foundPeople);
+     // alert("multiple results");
+    //  let foundPeople = searchByGender(people);
+    //  const testTest = Object.entries(foundPeople);
 
-      testTest.forEach(([key, value]) => {
-        alert([key]);
-        alert([value]);
-      });
+      //testTest.forEach(([key, value]) => {
+        //alert([key]);
+        //alert([value]);
+      //});
+     // false;
       }
-    }
+    //}
       
         
         //foundPeople = searchByGender(people));
@@ -198,19 +199,52 @@ function searchByGender(people){
 
 
     let foundPeople = people.filter(function(person){
+    
     if(person.gender === gender){
-
       return true;
-      }
-      else{
+    }
+    
+    else{
+    //  alert("multiple results");  
+    }  
+    //return false;
+  });
 
+  //return foundPeople;
+
+
+  //if(foundPeople > null){
+     
+    const testTest = Object.entries(foundPeople);
+        testTest.forEach(([key, value]) => {
+          alert(key);
+          alert(value);
+        }); 
       }
-      return false;
-    });
   
-    return foundPeople;
-  }
   
+  
+  
+  
+  
+  
+  //});
+  //return foundPeople;
+//}  
+    //if(parseInt(foundPeople) > 1){
+      
+    //  alert("multiple results");
+        
+    //  const testTest = Object.entries(foundPeople);
+  
+     // else if(foundPeople)
+     //   testTest.forEach(([key, value]) => {
+    //    alert(key);
+    //      alert(value);
+    //    }); 
+    //  }
+    //}
+      
   
 function searchByHeight(people){
   
@@ -527,3 +561,5 @@ function chars(input){
 
 
 //https://www.samanthaming.com/tidbits/76-converting-object-to-array/  Important to figure out array from objects.
+
+
