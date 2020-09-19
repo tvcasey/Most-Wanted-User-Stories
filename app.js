@@ -11,7 +11,7 @@ function promptFor(question, valid){
     var response = prompt(question).trim();
   } while(!response || !valid(response));
   return response;
-  }
+}
 
   function yesNo(input){
     return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
@@ -39,7 +39,7 @@ function app(people){
          searchResults = searchById(people);
          break;
        default:
-        searchResults = searchByinfo(people);
+         searchResults = searchByinfo(people);
         // TODO: search by traits
          break;
      
@@ -50,20 +50,32 @@ function app(people){
   }
   
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  
-   if(searchResults.length === 1) {
+  let foundPeople;
+   if(searchResults === 1) {
     mainMenu(searchResults[0], people);
   }
      else{
-      prompt("multiple results");
+      alert("multiple results");
+      let foundPeople = searchByGender(people);
+      const testTest = Object.entries(foundPeople);
+
+      testTest.forEach(([key, value]) => {
+        alert([key]);
+        alert([value]);
+      });
+      }
+    }
+      
+        
+        //foundPeople = searchByGender(people));
+
     //read out all results
-   }
+    
+
+  
 
 
-}
 
-
-       
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -75,7 +87,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", chars);
 
   switch(displayOption){
     case "info":
@@ -87,6 +99,7 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
+
     // TODO: get person's descendants
     break;
     case "restart":
@@ -124,30 +137,32 @@ function searchByinfo(people){
     break;
     case "gender":
       foundPeople = searchByGender(people);
-      caseInfo(person.gender);
-     // return mainMenu(person, people);
+    //caseInfo(personInfo.gender);
+    //caseInfo(person.gender);
+    //mainMenu(person, people);
     // TODO: get person's family
     break;
     case "height":
       foundPeople = searchByHeight(people);
-      caseInfo(person.height);
-     // return mainMenu(person, people);
+    // caseInfo(person.height);
+    // return mainMenu(person, people);
     // TODO: get person's descendants
     break;
     case "weight":
       foundPeople = searchByWeight(people);
       caseInfo(person.weight);
-    //  return mainMenu(person, people);
+    //return mainMenu(person, people);
     break;
     case "eyeColor":
       foundPeople = searchByEyeColor(people);
       caseInfo(person.eyeColor)
-     // return mainMenu(person, people);
+    // return mainMenu(person, people);
     break;
     case "restart":
       app(people); // restart
     break;
     case "quit":
+    break;
     //return; // stop execution
     default:
     break;
@@ -259,7 +274,18 @@ function searchByEyeColor(people){
     foundPeople = false;
 
   }  
-
+//  Object.entries(people);
+//  Object.values(people);
+//  Object.keys(people);
+//  These functions print to the console.log the elements of an object left being keys
+//  right being their values.  Entries display both in a console.log array.
+//  I have the working temporary code on line 60.  It is here toggled out.
+//const testTest = Object.entries(people);
+//
+//      testTest.forEach(([key, value]) => {
+//        console.log(key); // left side
+//        console.log(value); 
+//      });
     
 
 function caseInfo(personInfo){
@@ -495,3 +521,9 @@ function chars(input){
 // 			 members after I find them with the program (display the names of
 // 			 the family members and their relation to the found person. Parents,
 //        spouse, and siblings)*/
+
+
+
+
+
+//https://www.samanthaming.com/tidbits/76-converting-object-to-array/  Important to figure out array from objects.
