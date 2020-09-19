@@ -132,7 +132,7 @@ function searchByinfo(people){
   switch(searchInfo){
     case "id":
       foundPeople = searchById(people);
-      caseInfo(person.id);
+      //caseInfo(person.id);
     //  return mainMenu(person, people);
     // TODO: get person's info
     break;
@@ -209,17 +209,29 @@ function searchByGender(people){
     }  
     //return false;
   });
-
+  //  alert("Gender Result: " + people.toSource(gender));
   //return foundPeople;
 
 
   //if(foundPeople > null){
+  
      
     const testTest = Object.entries(foundPeople);
-        testTest.forEach(([key, value]) => {
-          alert(key);
-          alert(value);
-        }); 
+    alert(testTest);   
+    
+    //testTest.forEach(([key, value]) => {
+        // alert(testTest.toString([key]));
+        // alert(testTest.toString([value]));
+        //  alert(testTest, key, value);
+
+        let i = 0;
+      for( i = 0; i < foundPeople.length; i++)
+    {
+
+      }    
+        alert(testTest.join("\n"));
+
+    //    }); 
       }
   
   
