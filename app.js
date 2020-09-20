@@ -1,10 +1,10 @@
-"use strict"
-"use strict"
-/*
-Build all of your functions for displaying and gathering information below (GUI).
-*/
+// Most-Wanted-User-Stories.
+// Tim Casey
+// Ramon Bolds
 
-// app is the function called to start the entire application
+
+"use strict"
+
 function promptFor(question, valid){
 
   do{
@@ -18,20 +18,47 @@ function promptFor(question, valid){
   
 
   }
-
-function app(people){
-  let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  let searchResults;
-
-  switch(searchType){
-    case 'yes':
-      searchResults = searchByName(people);
-      break;
-    case 'no':
-      break;
-      default:
-      break;
-  }
+  function app(people){
+    let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+    let searchResults;
+    switch(searchType){
+      case 'yes':
+        searchResults = searchByName(people);
+        break;
+      case 'no':
+       let searchUserId = prompt("Would you like to search by 'id'? Enter 'yes' or 'no'");
+       switch (searchUserId) {
+         case 'yes': 
+           searchResults = searchById(people);
+           break;
+           case 'no':
+           let searchUserInfo = prompt("Would you like to search by 'info'? Enter 'yes' or 'no'");
+           switch (searchUserInfo){ 
+           case 'yes':
+           searchResults = searchByinfo(people);
+          // TODO: search by traits
+           break;
+           case 'no':
+             let searchUserSpouse = prompt("Would you like to search by 'spouse'? Enter 'yes or 'no'");
+            switch(searchUserSpouse){
+              case 'yes':
+                searchResults = searchBySpouse(people);
+                break;
+                case 'no':
+                  let searchUserParents = prompt("Would you like to search by 'parents'? Enter 'yes' or 'no'");
+                  switch(searchUserParents){
+                    case 'yes':
+                      searchResults = searchByParents(people);
+                      break;
+                  }
+            }
+            }    
+            }
+        break;
+        default:
+      app(people); // restart app
+        break;
+    }
   let searchInfo = prompt("Would you like to search by 'id'? Enter 'yes' or 'no'");
 
      switch(searchInfo){
@@ -40,13 +67,7 @@ function app(people){
          break;
        default:
          searchResults = searchByInfo(people);
-        // TODO: search by traits
          break;
-     
-  //    break;
-  //    default:
-  //  app(people); // restart app
-  //    break;
   }
 }  
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
@@ -55,28 +76,9 @@ function app(people){
     //mainMenu(searchResults[0], people);
   }
      else{
-     // alert("multiple results");
-    //  let foundPeople = searchByGender(people);
-    //  const testTest = Object.entries(foundPeople);
-
-      //testTest.forEach(([key, value]) => {
-        //alert([key]);
-        //alert([value]);
-      //});
-     // false;
       }
-    //}
       
-        
-        //foundPeople = searchByGender(people));
-
-    //read out all results
-    
-
-  
-
-
-
+      
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -124,51 +126,44 @@ let personInfo = {
 };
 
 
-function searchByInfo(people){
+function searchByInfo(people, oldPeople){
 
   let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor'? Type the option you want or 'restart' or 'quit'");
   let foundPeople;
-// to search by info
+
   switch(searchInfo){
     case "id":
       foundPeople = searchById(people);
-      caseInfo(person.id);
-    //  return mainMenu(person, people);
-    // TODO: get person's info
     break;
     case "gender":
       foundPeople = searchByGender(people);
-    //caseInfo(personInfo.gender);
-    //caseInfo(person.gender);
-    //mainMenu(person, people);
-    // TODO: get person's family
     break;
     case "height":
       foundPeople = searchByHeight(people);
-    // caseInfo(person.height);
-    // return mainMenu(person, people);
-    // TODO: get person's descendants
     break;
     case "weight":
       foundPeople = searchByWeight(people);
-      caseInfo(person.weight);
-    //return mainMenu(person, people);
     break;
     case "eyeColor":
       foundPeople = searchByEyeColor(people);
-      caseInfo(person.eyeColor)
-    // return mainMenu(person, people);
     break;
     case "restart":
-      app(people); // restart
+      if (oldPeople === null) {
+        
+        app(people);
+      }
+      else{
+        app(oldPeople);
+      }
     break;
     case "quit":
+      return people;
     break;
-    //return; // stop execution
     default:
     break;
-    //return mainMenu(person, people); // ask again
+  
   }
+  return searchByInfo(foundPeople, oldPeople);
 }
 
 function searchById(people){
@@ -190,8 +185,7 @@ let foundPeople = people.filter(function(person){
   return foundPeople;
   
 }
-  // TODO: find the person using the name they entered
-  // return foundPerson;  Had a return issue during editing.  Do we use return?
+
 
 function searchByGender(people){
 
@@ -202,92 +196,13 @@ function searchByGender(people){
     
     if(person.gender === gender){
       return true;
-    
-  
-
-}
+    }
     else{
-    //  alert("multiple results");  
+      return false;
     }  
-    //return false;
-  //});
-  //  alert("Gender Result: " + people.toSource(gender));
-  //return foundPeople;
-
-
-  //if(foundPeople > null){
-
-    });   
-       
-    //let trialRun= testTest.toString();
-    let myJSON = JSON.stringify(foundPeople);
-    let testTest = Object.entries(myJSON);
-  
-    
-    //let passedTest = toString(testTest);
-    //testTest.forEach(myJSON => {
-         
-      
-        //alert(myJSON);  //([key, value]));
-        // alert(testTest.toString([value]));
-        //  alert(testTest, key, value);
-
-      let i = 1;
-        for(let i = 1; i < foundPeople.length; i++){
-          let peopleResults = "";
-          peopleResults += Object.entries(foundPeople);
-          alert(peopleResults);
-        }
-      
-     // function traitsDisplay(person){
-
-      
-     // alert(" + \n gender: "+  person.gender
-     // + "\n id: "+ person.id
-     // + "\n firstName: "+ person.firstName
-     // + "\n lastName: "+ person.lastName
-     // + "\n height: " + person.height
-     // + "\n weight: " + person.weight
-     // + "\n eyeColor: " + person.eyeColor
-    //+ "\n currentSpouse: " + person.currentSpouse);
-    //  }
-      //foundPeople[i+1]); 
-
-
-
-
-
-
-        //alert(Object.entries(foundPeople[i++]));
-          
-      //  alert(testTest.join("\n"));
-      //  alert(toString.testTest);
-  
-    //  });
-    
-  
-  
-  
-  
-  
-  
-  //});
-  //return foundPeople;
-//}  
-    //if(parseInt(foundPeople) > 1){
-      
-    //  alert("multiple results");
-        
-    //  const testTest = Object.entries(foundPeople);
-  
-     // else if(foundPeople)
-     //   testTest.forEach(([key, value]) => {
-    //    alert(key);
-    //      alert(value);
-    //    }); 
-    //  }
-    //}
-      }
+    return foundPeople;
+});
+}
 
   
 function searchByHeight(people){
@@ -352,18 +267,11 @@ function searchByEyeColor(people){
     foundPeople = false;
 
   }  
-//  Object.entries(people);
-//  Object.values(people);
-//  Object.keys(people);
-//  These functions print to the console.log the elements of an object left being keys
-//  right being their values.  Entries display both in a console.log array.
-//  I have the working temporary code on line 60.  It is here toggled out.
 //const testTest = Object.entries(people);
 //
 //      testTest.forEach(([key, value]) => {
 //        console.log(key); // left side
 //        console.log(value); 
-//      });
     
 
 function caseInfo(personInfo){
@@ -404,8 +312,8 @@ function searchByName(people){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
+    displayPerson(person);
+  }));
 }
 
 
@@ -425,18 +333,7 @@ function displayPerson(person){
   alert(personInfo);
 }
 
-// function that prompts and validates user input
-//function promptFor(question, valid){
-//
-//  do{
-//    var response = prompt(question).trim();
-//  } while(!response || !valid(response));
-//  return response;
-//  }
 
-// helper function to pass into promptFor to validate yes/no answers
-//function yesNo(input){
-//  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 
 
 // helper function to pass in as default promptFor validation
@@ -462,39 +359,9 @@ function chars(input){
 // (5 points): As a developer, I want to make consistent commits with good, descriptive messages.*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // /*
 // (5 points): As a developer, I want to run validation on any user input,
 // 			ensuring that a user is re- prompted when they provide invalid input.*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -504,46 +371,10 @@ function chars(input){
 // 			 who match the search)*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // /*
 // (20 points): As a user, I want to be able to search for someone based on
 // 			 2-5 criteria. (I.e if you search for Gender: male and Eye
 // 			 Color: blue, you should get back a list of people who match the search)*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -554,44 +385,10 @@ function chars(input){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // /*
 // (25 points): As a user, I want to be able look up someone’s descendants after I
 // 			 find them with the program (display the names of the descendants),
 // 			 using recursion.*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
