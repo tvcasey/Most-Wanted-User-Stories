@@ -39,7 +39,7 @@ function app(people){
          searchResults = searchById(people);
          break;
        default:
-         searchResults = searchByinfo(people);
+         searchResults = searchByInfo(people);
         // TODO: search by traits
          break;
      
@@ -112,7 +112,7 @@ function mainMenu(person, people){
     mainMenu(person, people); // ask again
   }
 }
-/*let personInfo = {
+let personInfo = {
   id: "personInfo.id",
   firstName: "personInfo.firstName",
   lastName: "personInfo.lastName",
@@ -121,10 +121,10 @@ function mainMenu(person, people){
   weight: "personInfo.weight",
   eyeColor: "personInfo.eyeColor",
   currentSpouse: "personInfo.currentSpouse"
-};*/
+};
 
 
-function searchByinfo(people){
+function searchByInfo(people){
 
   let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor'? Type the option you want or 'restart' or 'quit'");
   let foundPeople;
@@ -202,37 +202,69 @@ function searchByGender(people){
     
     if(person.gender === gender){
       return true;
-    }
     
+  
+
+}
     else{
     //  alert("multiple results");  
     }  
     //return false;
-  });
+  //});
   //  alert("Gender Result: " + people.toSource(gender));
   //return foundPeople;
 
 
   //if(foundPeople > null){
 
-     
-    let testTest = Object.entries(foundPeople);   
+    });   
+       
+    //let trialRun= testTest.toString();
+    let myJSON = JSON.stringify(foundPeople);
+    let testTest = Object.entries(myJSON);
+  
+    
     //let passedTest = toString(testTest);
-    testTest.forEach(([foundPeople])); //=> {
-         alert(testTest.toString(foundPeople));  //([key, value]));
+    //testTest.forEach(myJSON => {
+         
+      
+        //alert(myJSON);  //([key, value]));
         // alert(testTest.toString([value]));
         //  alert(testTest, key, value);
 
-  //      let i = 0;
-  //    for( i = 0; i < foundPeople.length; i++)
-    {
+      let i = 1;
+        for(let i = 1; i < foundPeople.length; i++){
+          let peopleResults = "";
+          peopleResults += Object.entries(foundPeople);
+          alert(peopleResults);
+        }
+      
+     // function traitsDisplay(person){
 
-      }    
+      
+     // alert(" + \n gender: "+  person.gender
+     // + "\n id: "+ person.id
+     // + "\n firstName: "+ person.firstName
+     // + "\n lastName: "+ person.lastName
+     // + "\n height: " + person.height
+     // + "\n weight: " + person.weight
+     // + "\n eyeColor: " + person.eyeColor
+    //+ "\n currentSpouse: " + person.currentSpouse);
+    //  }
+      //foundPeople[i+1]); 
+
+
+
+
+
+
+        //alert(Object.entries(foundPeople[i++]));
+          
       //  alert(testTest.join("\n"));
       //  alert(toString.testTest);
-    //    }); 
+  
     //  });
-    }
+    
   
   
   
@@ -255,7 +287,8 @@ function searchByGender(people){
     //    }); 
     //  }
     //}
-      
+      }
+
   
 function searchByHeight(people){
   
@@ -276,7 +309,7 @@ function searchByHeight(people){
           return false;
       });
       return foundPeople;
-    }  
+    }
   
       
 
@@ -367,24 +400,25 @@ function searchByName(people){
   return foundPerson;
 }
 
+
 // alerts a list of people
 function displayPeople(people){
-
   alert(people.map(function(person){
-  
     return person.firstName + " " + person.lastName;
-  
-      }));   //.join("\n"));
-    }
+  }).join("\n"));
+}
+
+
+
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo = "id: " + person.Id + "\n";
-  personInfo += "gender" + person.Gender + "\n";
-  personInfo += "height" + person.Height + "\n";
-  personInfo += "weight" + person.Weight + "\n";
+  personInfo += "gender" + person.gender + "\n";
+  personInfo += "height" + person.height + "\n";
+  personInfo += "weight" + person.weight + "\n";
   personInfo += "eyeColor" + person.eyeColor + "\n";
   personInfo = "currentSpouse" +person.currentSpouse + "\n";
   // TODO: finish getting the rest of the information to display
