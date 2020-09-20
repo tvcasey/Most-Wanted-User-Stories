@@ -132,7 +132,7 @@ function searchByinfo(people){
   switch(searchInfo){
     case "id":
       foundPeople = searchById(people);
-      //caseInfo(person.id);
+      caseInfo(person.id);
     //  return mainMenu(person, people);
     // TODO: get person's info
     break;
@@ -214,26 +214,25 @@ function searchByGender(people){
 
 
   //if(foundPeople > null){
-  
+
      
-    const testTest = Object.entries(foundPeople);
-    alert(testTest);   
-    
-    //testTest.forEach(([key, value]) => {
-        // alert(testTest.toString([key]));
+    let testTest = Object.entries(foundPeople);   
+    //let passedTest = toString(testTest);
+    testTest.forEach(([foundPeople])); //=> {
+         alert(testTest.toString(foundPeople));  //([key, value]));
         // alert(testTest.toString([value]));
         //  alert(testTest, key, value);
 
-        let i = 0;
-      for( i = 0; i < foundPeople.length; i++)
+  //      let i = 0;
+  //    for( i = 0; i < foundPeople.length; i++)
     {
 
       }    
-        alert(testTest.join("\n"));
-
+      //  alert(testTest.join("\n"));
+      //  alert(toString.testTest);
     //    }); 
-      }
-  
+    //  });
+    }
   
   
   
