@@ -18,6 +18,7 @@ function promptFor(question, valid){
   
 
   }
+
   function app(people){
     let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
     let searchResults;
@@ -26,59 +27,26 @@ function promptFor(question, valid){
         searchResults = searchByName(people);
         break;
       case 'no':
-       let searchUserId = prompt("Would you like to search by 'id'? Enter 'yes' or 'no'");
-       switch (searchUserId) {
-         case 'yes': 
-           searchResults = searchById(people);
-           break;
-           case 'no':
-           let searchUserInfo = prompt("Would you like to search by 'info'? Enter 'yes' or 'no'");
-           switch (searchUserInfo){ 
-           case 'yes':
-           searchResults = searchByinfo(people);
-          // TODO: search by traits
-           break;
-           case 'no':
-             let searchUserSpouse = prompt("Would you like to search by 'spouse'? Enter 'yes or 'no'");
-            switch(searchUserSpouse){
-              case 'yes':
-                searchResults = searchBySpouse(people);
-                break;
-                case 'no':
-                  let searchUserParents = prompt("Would you like to search by 'parents'? Enter 'yes' or 'no'");
-                  switch(searchUserParents){
-                    case 'yes':
-                      searchResults = searchByParents(people);
-                      break;
-                  }
-            }
-            }    
-            }
-        break;
+       prompt("Would you like to search by info? Enter 'yes' or 'no'");
+       case 'yes':
+         searchResults = searchByInfo(people);
+         break;
+      
         default:
       app(people); // restart app
         break;
     }
-  let searchInfo = prompt("Would you like to search by 'id'? Enter 'yes' or 'no'");
-
-     switch(searchInfo){
-       case 'yes': 
-         searchResults = searchById(people);
-         break;
-       default:
-         searchResults = searchByInfo(people);
-         break;
-  }
-}  
-  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  let searchResults;
-   if(searchResults === 1) {
-    //mainMenu(searchResults[0], people);
-  }
-     else{
+  
+    // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
+  
+      if(searchResults.length === 1) {
+         mainMenu(searchResults[0], people);
       }
-      
-      
+      else{
+        alert("multiple or no results");
+       displayPeople(searchResults);
+      }
+  } 
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -90,11 +58,11 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", chars);
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-      caseInfo(person);
+      displayPerson(person);
       mainMenu(person, people);
     // TODO: get person's info
     break;
@@ -114,67 +82,79 @@ function mainMenu(person, people){
     mainMenu(person, people); // ask again
   }
 }
-let personInfo = {
-  id: "personInfo.id",
-  firstName: "personInfo.firstName",
-  lastName: "personInfo.lastName",
-  gender: "personInfo.gender",
-  height: "personInfo.height",
-  weight: "personInfo.weight",
-  eyeColor: "personInfo.eyeColor",
-  currentSpouse: "personInfo.currentSpouse"
-};
+// let personInfo = {
+//   id: "personInfo.id",
+//   firstName: "personInfo.firstName",
+//   lastName: "personInfo.lastName",
+//   gender: "personInfo.gender",
+//   height: "personInfo.height",
+//   weight: "personInfo.weight",
+//   eyeColor: "personInfo.eyeColor",
+//   currentSpouse: "personInfo.currentSpouse"
+// };
 
 
-function searchByInfo(people, oldPeople){
+function searchByInfo(people, oldPeople = null){
 
-  let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor'? Type the option you want or 'restart' or 'quit'");
+  let searchInfo = prompt("Do you know their 'id', 'gender', 'height', 'weight', 'eyeColor', parent ? Type the option you want or 'restart' or 'finish'");
   let foundPeople;
 
   switch(searchInfo){
     case "id":
-      foundPeople = searchById(people);
-    break;
+       let id = promptFor("What is the person's 'id'?", chars);
+      foundPeople = searchById(people, parseIint(id));
+      displayPeople(foundPeople);
+      break;
     case "gender":
       foundPeople = searchByGender(people);
-    break;
+      displayPeople(foundPeople);
+
+      break;
     case "height":
       foundPeople = searchByHeight(people);
-    break;
+      displayPeople(foundPeople);
+
+      break;
     case "weight":
       foundPeople = searchByWeight(people);
-    break;
+      displayPeople(foundPeople);
+
+      break;
     case "eyeColor":
       foundPeople = searchByEyeColor(people);
-    break;
+      displayPeople(foundPeople);
+      break;
+    case "parent":
+      foundpeople  = searchByParent(people);
+      displayPeople(foundPeople);
+
     case "restart":
-      if (oldPeople === null) {
-        
+      if (oldPeople === null) {        
         app(people);
       }
       else{
         app(oldPeople);
       }
-    break;
-    case "quit":
+      break;
+    case "finish":
       return people;
-    break;
+     break;
     default:
     break;
   
   }
-  return searchByInfo(foundPeople, oldPeople);
+  if (oldPeople != null) {    
+    return searchByInfo(foundPeople, oldPeople);
+  }
+  else{
+    return searchByInfo(foundPeople, people);
+  }
 }
 
-function searchById(people){
-
-
-
-let id = promptFor("What is the person's 'id'?", chars);
-  
-
-let foundPeople = people.filter(function(person){
-    if(person.id === parseInt(id)){
+function searchById(people, id){
+ 
+  let foundPeople = people.filter(function(person){
+    if(person.id === id){
       return true;
     }
     else{
@@ -194,14 +174,14 @@ function searchByGender(people){
 
     let foundPeople = people.filter(function(person){
     
-    if(person.gender === gender){
-      return true;
-    }
-    else{
-      return false;
-    }  
+      if(person.gender === gender){
+        return true;
+      }
+      else{
+        return false;
+      }  
+    });
     return foundPeople;
-});
 }
 
   
@@ -211,51 +191,39 @@ function searchByHeight(people){
   
   let foundPeople = people.filter(function(person){
         
-    if(person.height === height){
-  
+    if(person.height === parseInt(height)){  
           return true;
         }
-  
-        
         else{
-
-        }
-  
           return false;
-      });
-      return foundPeople;
-    }
-  
-      
+        }  
+    });
+  return foundPeople;
+}
 
 function searchByWeight(people){
 
   let weight = promptFor("Please enter the person's weight in pounds.", chars);
       
   let foundPeople = people.filter(function(person){
-    if(person.weight === weight){
-    
-    return true;
-    }
-    
-    else{
-    
-    return false;
-    }
-    
+    if(person.weight === parseInt(weight)){    
+      return true;
+    }    
+    else{    
+      return false;
+    }    
   });
-  foundPeople = false;
+   return foundPeople;
 }
     
       
       
 function searchByEyeColor(people){
 
-  let eyeColor = promptFor("Please enter the person's height in (feet, inches)?", chars);
+  let eyeColor = promptFor("What is the 'eyeColor'?", chars);
       
-  let foundPeole = people.filter(function(person){
-    if(person.eyeColor === eyeColor){
-      
+  let foundPeople = people.filter(function(person){
+    if(person.eyeColor === eyeColor){      
     return true;
     }
       
@@ -263,10 +231,10 @@ function searchByEyeColor(people){
       
     return false;
     }
-    });
-    foundPeople = false;
+  });
+   return foundPeople;
 
-  }  
+}  
 //const testTest = Object.entries(people);
 //
 //      testTest.forEach(([key, value]) => {
@@ -274,18 +242,20 @@ function searchByEyeColor(people){
 //        console.log(value); 
     
 
-function caseInfo(personInfo){
-
-    alert("info:"
-    + "\n id: " + personInfo.id
-    + "\n firstName: " + personInfo.firstName
-    + "\n lastName: " + personInfo.lastName
-    + "\n gender: " + personInfo.gender
-    + "\n height: " + personInfo.height
-    + "\n weight: " + personInfo.weight
-    + "\n eyeColor: " + personInfo.eyeColor
-    + "\n currentSpouse: " + personInfo.currentSpouse);
-}
+// function caseInfo(personInfo){
+//   alert("info:"
+//   + "\n id: " + personInfo.id
+//   + "\n firstName: " + personInfo.firstName
+//   + "\n lastName: " + personInfo.lastName
+//   + "\n gender: " + personInfo.gender
+//   + "\n height: " + personInfo.height
+//   + "\n weight: " + personInfo.weight
+//   + "\n eyeColor: " + personInfo.eyeColor
+//   + "\n currentSpouse: " + personInfo.currentSpouse
+//   + "\n occupation: " + personInfo.occupation
+//   + "\n dob: " + personInfo.dob
+//   );
+// }
 
 
 function searchByName(people){
@@ -321,18 +291,84 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
+  let personInfo = "Info: \n" 
+  personInfo += "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo = "id: " + person.Id + "\n";
-  personInfo += "gender" + person.gender + "\n";
-  personInfo += "height" + person.height + "\n";
-  personInfo += "weight" + person.weight + "\n";
-  personInfo += "eyeColor" + person.eyeColor + "\n";
-  personInfo = "currentSpouse" +person.currentSpouse + "\n";
+  personInfo += "id: " + person.Id + "\n";
+  personInfo += "gender: " + person.gender + "\n";
+  personInfo += "height: " + person.height + "\n";
+  personInfo += "weight: " + person.weight + "\n";
+  personInfo += "eyeColor: " + person.eyeColor + "\n";
+  personInfo += "currentSpouse: " +person.currentSpouse + "\n";
+  person.parents.map(function(parent) {
+    personInfo += "Parent: " + parent + "\n"
+  })
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
 
+function searchByParent(people) {
+  let parent = searchByName(people);
+  let result = searchByParents(people, parent[0].id);
+  return result;
+}
+
+function searchByParents(people, parentId){
+  //find a person by their parents id
+  //people have between 0 and 2 parents
+  //map people and build array of results
+  let searchResult = [];
+  people.map(function(person){
+    //for each id in parents
+    person.parents.map(personParent=>{
+      //if parent.id eqals personparent
+      if (personParent === parentId) {
+        //if parent id appears in pesron.parents, push person
+       // if person is already in Array, dontpush
+        if (searchResult.includes(person)) {
+         // do nothing
+        }
+        else{
+          searchResult.push(person)
+        }
+      }
+    })
+
+  })
+//return result
+  return searchResult;
+}
+
+function findFamily(people, person){
+  let searchResult = [];
+  //find parents and siblings
+  people.parents.map(parentId=>{
+    // search data using id
+    let seachResults = searchById(parentId);
+    //add parent to search result
+    searchResult.push(searchResult[0]);
+  })
+let searchSibling = [];
+//label index search 
+  people.parents.map(parentId=>{
+    //'map' search data using id 
+    //(if parent id = person parent)
+    //searchByParents(people, parentId)
+    let siblings = searchByParents(people, parentId);
+    //add parent to search result 
+    siblings.map(sibling=>{
+      searchResult.push(sibling);
+    })
+  });
+   if(person.currentSpouse != null){
+    //if aspouse not null
+    let spouse = searchById(people, parentId);
+    //get spouse
+    searchResult.push(spouse[0]);
+    //add spouse to searchResult
+  };
+    displayPeople(searchResult);
+}
 
 
 
@@ -341,6 +377,8 @@ function chars(input){
 
   return true; // default validation only
 }
+
+
 
 
 // /*  Most Wanted User Stories 100 points
